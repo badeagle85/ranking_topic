@@ -1,6 +1,6 @@
-import Link from "./Link";
+import Link from './Link'
 
-export const Footer = () => {
+const Footer = () => {
   return (
     <footer>
       <div className="mt-16 flex flex-col items-center">
@@ -12,5 +12,7 @@ export const Footer = () => {
         </div>
       </div>
     </footer>
-  );
-};
+  )
+}
+
+export default Footer
