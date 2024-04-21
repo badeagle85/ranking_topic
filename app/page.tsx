@@ -1,112 +1,119 @@
+'use client'
+
 import Image from 'next/image'
+import { useEffect, useState } from 'react'
 
 export default function Home() {
+  const [apiData, setApiData] = useState(null)
+
+  useEffect(() => {
+    const url = 'https://openapi.naver.com/v1/datalab/search'
+    const headers = {
+      'X-Naver-Client-Id': '<YOUR_CLIENT_ID>',
+      'X-Naver-Client-Secret': '<YOUR_CLIENT_SECRET>',
+      'Content-Type': 'application/json',
+    }
+    const body = JSON.stringify({
+      // 여기에 요청 본문을 작성하세요.
+    })
+
+    fetch(url, {
+      method: 'POST',
+      headers: headers,
+      body: body,
+    })
+      .then((response) => response.json())
+      .then((data) => setApiData(data))
+      .catch((error) => console.error('Error:', error))
+  }, [])
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:size-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            123123
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+    <main className="flex min-h-screen flex-col items-center justify-between ">
+      <div className="mb-8">
+        <div className="rounded-2xl">
+          <div>
+            <div className="flex justify-between items-center px-2 py-4">
+              <h3 className="font-medium text-black dark:text-white">인기글</h3>
+              <a
+                className="font-medium text-black dark:text-white"
+                href="/post/list"
+              >
+                <div className="flex font-bold">더보기</div>
+              </a>
+            </div>
+            <div className="p-4">
+              <div className="grid gap-4 grid-cols-2">
+                {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((question) => (
+                  <div key={question}>
+                    <button className="flex w-full items-center gap-1.5 sm:gap-3 xl:gap-6 ">
+                      <div>{question}.</div>
+                      <div>
+                        <h4 className="text-left text-title-xsm font-medium text-black dark:text-white">
+                          How long we deliver your first blog post?
+                        </h4>
+                      </div>
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
-
-      <div className="relative z-[-1] flex place-items-center before:absolute before:h-[300px] before:w-full before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 sm:before:w-[480px] sm:after:w-[240px] before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className="mb-32 grid text-center lg:mb-0 lg:w-full lg:max-w-5xl lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Docs{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Learn{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Templates{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Explore starter templates for Next.js.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Deploy{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-balance text-sm opacity-50">
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
+        {/* 영역 */}
+        <div className="rounded-2xl">
+          <div>
+            <div className="flex justify-between items-center px-2 py-4">
+              <h3 className="font-medium text-black dark:text-white">
+                언론사별 가장 많이 본 뉴스
+              </h3>
+              <a
+                className="font-medium text-black dark:text-white"
+                href="/post/list"
+              >
+                <div className="flex font-bold">더보기</div>
+              </a>
+            </div>
+            <div>
+              <div className="grid gap-4 grid-cols-2">
+                {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((question) => (
+                  <div className="bg-white rounded shadow-md flex card text-grey-darkest">
+                    <Image
+                      className="w-1/2 h-full rounded-l-sm"
+                      src="https://bit.ly/2EApSiC"
+                      width={128}
+                      height={60}
+                      alt="Room Image"
+                    />
+                    <div className="w-full flex flex-col">
+                      <div className="p-4 pb-0 flex-1">
+                        <h3 className="font-light mb-1 text-grey-darkest">
+                          Tower Hotel
+                        </h3>
+                        <div className="text-xs flex items-center mb-4">
+                          <i className="fas fa-map-marker-alt mr-1 text-grey-dark"></i>
+                          Soho, London
+                        </div>
+                        <div className="flex items-center mt-4">
+                          <div className="pr-2 text-xs">
+                            <i className="fas fa-wifi text-green"></i> Free WiFi
+                          </div>
+                          <div className="px-2 text-xs">
+                            <i className="text-grey-darker far fa-building"></i>{' '}
+                            2mins to center
+                          </div>
+                        </div>
+                      </div>
+                      <div className="bg-grey-lighter p-3 flex items-center justify-between transition hover:bg-grey-light">
+                        Book Now
+                        <i className="fas fa-chevron-right"></i>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </main>
   )
