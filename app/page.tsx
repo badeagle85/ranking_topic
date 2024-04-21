@@ -1,5 +1,4 @@
 'use client'
-
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
 
@@ -7,26 +6,12 @@ export default function Home() {
   const [apiData, setApiData] = useState(null)
 
   useEffect(() => {
-    const url = 'https://openapi.naver.com/v1/datalab/search'
-    const headers = {
-      'X-Naver-Client-Id': '<YOUR_CLIENT_ID>',
-      'X-Naver-Client-Secret': '<YOUR_CLIENT_SECRET>',
-      'Content-Type': 'application/json',
-    }
-    const body = JSON.stringify({
-      // 여기에 요청 본문을 작성하세요.
-    })
-
-    fetch(url, {
-      method: 'POST',
-      headers: headers,
-      body: body,
-    })
+    fetch('/api/search')
       .then((response) => response.json())
-      .then((data) => setApiData(data))
+      .then((data) => console.log(data))
+      // .then((data) => setApiData(data))
       .catch((error) => console.error('Error:', error))
   }, [])
-
   return (
     <main className="flex min-h-screen flex-col items-center justify-between ">
       <div className="mb-8">
@@ -76,7 +61,10 @@ export default function Home() {
             <div>
               <div className="grid gap-4 grid-cols-2">
                 {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((question) => (
-                  <div className="bg-white rounded shadow-md flex card text-grey-darkest">
+                  <div
+                    className="bg-white rounded shadow-md flex card text-grey-darkest"
+                    key={question}
+                  >
                     <Image
                       className="w-1/2 h-full rounded-l-sm"
                       src="https://bit.ly/2EApSiC"
